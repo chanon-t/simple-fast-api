@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import datetime
 
 
-from rag_engine import RAGEngine
+# from rag_engine import RAGEngine
 
 app = FastAPI()
 
@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
-rag_engine = RAGEngine()
+# rag_engine = RAGEngine()
 
 from pydantic import BaseModel
 from typing import List, Literal
@@ -30,7 +30,7 @@ class QueryMessage(BaseModel):
     query: str
     llm: str
     namespace: str = "scbx_hr"
-    engine: Literal["chat", "chat-v2", "query", "retrieve"] = "chat"
+    engine: Literal["chat", "chat-v2", "query", "retrieve"] = "chat-v2"
     system_prompt: str
     messages: List[Message]
 
@@ -47,13 +47,13 @@ async def health_check():
     )
 
 
-@app.get("/query")
-def test_query(q: str, model: str):
-    result = rag_engine.test_query(q, model)
-    return result
+# @app.get("/query")
+# def test_query(q: str, model: str):
+#     result = rag_engine.test_query(q, model)
+#     return result
 
 
-@app.post("/messages")
-def query_messages(data: QueryMessage):
-    result = rag_engine.query_messages(data)
-    return result
+# @app.post("/messages")
+# def query_messages(data: QueryMessage):
+#     result = rag_engine.query_messages(data)
+#     return result
